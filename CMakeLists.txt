@@ -1,3 +1,5 @@
+# TODO 1: Update the minimum required version to 3.15
+
 # Set the minimum required version of CMake to be 3.10
 cmake_minimum_required(VERSION 3.10)
 
@@ -8,6 +10,22 @@ project(Tutorial VERSION 1.0 LANGUAGES CXX)
 add_library(tutorial_compiler_flags INTERFACE)
 # Add compiler feature cxx_std_11 to tutorial_compiler_flags
 target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_11)
+
+# TODO 2: Create helper variables to determine which compiler we are using:
+# * Create a new variable gcc_like_cxx that is true if we are using CXX and
+#   any of the following compilers: ARMClang, AppleClang, Clang, GNU, LCC
+# * Create a new variable msvc_cxx that is true if we are using CXX and MSVC
+# Hint: Use set() and COMPILE_LANG_AND_ID
+
+# TODO 3: Add warning flag compile options to the interface library
+# tutorial_compiler_flags.
+# * For gcc_like_cxx, add flags -Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused
+# * For msvc_cxx, add flags -W3
+# Hint: Use target_compile_options()
+
+# TODO 4: With nested generator expressions, only use the flags for the
+# build-tree
+# Hint: Use BUILD_INTERFACE
 
 # Use configure_file to configure and copy TutorialConfig.h.in to TutorialConfig.h
 configure_file(TutorialConfig.h.in TutorialConfig.h)

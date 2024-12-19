@@ -18,11 +18,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Use configure_file to configure and copy TutorialConfig.h.in to TutorialConfig.h
 configure_file(TutorialConfig.h.in TutorialConfig.h)
 
-# TODO 2: Remove EXTRA_INCLUDES list
-
 # Use add_subdirectory() to add MathFunctions to this project
 add_subdirectory(MathFunctions)
-list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/MathFunctions")
 
 # Add an executable called Tutorial to the project
 add_executable(Tutorial tutorial.cxx)
@@ -32,12 +29,9 @@ add_executable(Tutorial tutorial.cxx)
 # Use target_link_libraries to link the library to our executable
 target_link_libraries(Tutorial PUBLIC MathFunctions)
 
-# TODO 3: Remove use of EXTRA_INCLUDES
-
 # Use target_include_directories to include ${PROJECT_BINARY_DIR}
 # Add MathFunctions to Tutorial's target_include_directories()
 target_include_directories(
     Tutorial PUBLIC 
     "${PROJECT_BINARY_DIR}" 
-    ${EXTRA_INCLUDES}
 )

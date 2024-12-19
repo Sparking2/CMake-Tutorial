@@ -4,16 +4,10 @@ cmake_minimum_required(VERSION 3.10)
 # Create a project named Tutorial and set the project version
 project(Tutorial VERSION 1.0 LANGUAGES CXX)
 
-# TODO 4: Replace the following code by:
-# * Creating an interface library called tutorial_compiler_flags
-#   Hint: use add_library() with the INTERFACE signature
-# * Add compiler feature cxx_std_11 to tutorial_compiler_flags
-#   Hint: Use target_compile_features()
-
-# Set the variable CMAKE_CXX_STANDARD to 11
-set(CMAKE_CXX_STANDARD 11)
-# Set the variable CMAKE_CXX_STANDARD_REQUIRED to True
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# Creating an interface library called tutorial_compiler_flags
+add_library(tutorial_compiler_flags INTERFACE)
+# Add compiler feature cxx_std_11 to tutorial_compiler_flags
+target_compile_features(tutorial_compiler_flags INTERFACE cxx_std_11)
 
 # Use configure_file to configure and copy TutorialConfig.h.in to TutorialConfig.h
 configure_file(TutorialConfig.h.in TutorialConfig.h)
@@ -24,10 +18,9 @@ add_subdirectory(MathFunctions)
 # Add an executable called Tutorial to the project
 add_executable(Tutorial tutorial.cxx)
 
-# TODO 5: Link Tutorial to tutorial_compiler_flags
-
 # Use target_link_libraries to link the library to our executable
-target_link_libraries(Tutorial PUBLIC MathFunctions)
+# Link Tutorial to tutorial_compiler_flags
+target_link_libraries(Tutorial PUBLIC MathFunctions tutorial_compiler_flags)
 
 # Use target_include_directories to include ${PROJECT_BINARY_DIR}
 # Add MathFunctions to Tutorial's target_include_directories()

@@ -14,6 +14,14 @@ namespace mathfunctions
                 return 0;
             }
 
+            // TODO 5: If both HAVE_LOG and HAVE_EXP are defined,  use the following:
+            //// double result = std::exp(std::log(x) * 0.5);
+            //// std::cout << "Computing sqrt of " << x << " to be " << result
+            ////        << " using log and exp" << std::endl;
+            // else, use the existing logic.
+
+            // Hint: Don't forget the #endif before returning the result!
+
             double result = x;
 
             // do ten iterations

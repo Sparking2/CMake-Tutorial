@@ -1,3 +1,5 @@
+include(MakeTable.cmake)
+
 # Add a library called MathFunctions with sources MathFunctions.cxx
 add_library(MathFunctions MathFunctions.cxx)
 
@@ -10,42 +12,12 @@ option(USE_MYMATH "Use my math library for sqrt" ON)
 if(USE_MYMATH)
     target_compile_definitions(MathFunctions PRIVATE "USE_MYMATH")
 
-    add_library(SqrtLibrary STATIC mysqrt.cxx)
+    add_library(SqrtLibrary STATIC mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h)
+
+    target_include_directories(SqrtLibrary PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
     # Link SqrtLibrary to tutorial_compiler_flags
     target_link_libraries(SqrtLibrary PUBLIC tutorial_compiler_flags)
-
-    # Include CheckCXXSourceCompiles
-    include(CheckCXXSourceCompiles)
-
-    # Use check_cxx_source_compiles with simple C++ code to verify availability of:
-    # * std::log
-    # * std::exp
-    check_cxx_source_compiles(
-    "
-        #include <cmath>
-        int main() {
-            std::log(1.0);
-            return 0;
-        }
-    " 
-    HAVE_LOG)
-
-    check_cxx_source_compiles(
-    "
-        #include <cmath>
-        int main() {
-            std::exp(1.0);
-            return 0;       
-        }
-    "
-    HAVE_EXP)
-
-    # Conditionally on HAVE_LOG and HAVE_EXP, add private compile
-    # definitions "HAVE_LOG" and "HAVE_EXP" to the SqrtLibrary target.
-    if(HAVE_LOG AND HAVE_EXP)
-        target_compile_definitions(SqrtLibrary PRIVATE "HAVE_LOG" "HAVE_EXP")
-    endif()
 
     target_link_libraries(MathFunctions PRIVATE SqrtLibrary)
 endif()

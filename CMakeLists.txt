@@ -51,16 +51,18 @@ install(TARGETS Tutorial DESTINATION bin)
 # Install TutorialConfig.h to the include directory
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h" DESTINATION include)
 
+# TODO 1: Replace enable_testing() with include(CTest)
+# enable testing
 enable_testing()
 
+# does the application run
 add_test(NAME Runs COMMAND Tutorial 25)
 
+# does the usage message work?
 add_test(NAME Usage COMMAND Tutorial)
 set_tests_properties(Usage PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*number")
 
-add_test(NAME StandardUse COMMAND Tutorial 4)
-set_tests_properties(StandardUse PROPERTIES PASS_REGULAR_EXPRESSION "4 is 2")
-
+# define a function to simplify adding tests
 function(do_test target arg result)
     add_test(NAME Comp${arg} COMMAND ${target} ${arg})
     set_tests_properties(Comp${arg} PROPERTIES PASS_REGULAR_EXPRESSION ${result})

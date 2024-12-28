@@ -10,11 +10,13 @@ target_include_directories(MathFunctions INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 option(USE_MYMATH "Use my math library for sqrt" ON)
 
 if(USE_MYMATH)
-    target_compile_definitions(MathFunctions PRIVATE "USE_MYMATH")
+    target_compile_definitions(MathFunctions PRIVATE "EXPORTING_MYMATH")
 
     add_library(SqrtLibrary STATIC mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h)
 
     target_include_directories(SqrtLibrary PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+
+    set_target_properties(SqrtLibrary PROPERTIES POSITION_INDEPENDENT_CODE ${BUILD_SHARED_LIBS})
 
     # Link SqrtLibrary to tutorial_compiler_flags
     target_link_libraries(SqrtLibrary PUBLIC tutorial_compiler_flags)

@@ -4,6 +4,12 @@ cmake_minimum_required(VERSION 3.15)
 # Create a project named Tutorial and set the project version
 project(Tutorial VERSION 1.0 LANGUAGES CXX)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/runtime")
+
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+
 # Creating an interface library called tutorial_compiler_flags
 add_library(tutorial_compiler_flags INTERFACE)
 # Add compiler feature cxx_std_11 to tutorial_compiler_flags

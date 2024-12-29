@@ -10,6 +10,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/runtime")
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
+set(CMAKE_DEBUG_POSTFIX d)
+
 # Creating an interface library called tutorial_compiler_flags
 add_library(tutorial_compiler_flags INTERFACE)
 # Add compiler feature cxx_std_11 to tutorial_compiler_flags
@@ -39,6 +41,7 @@ add_subdirectory(MathFunctions)
 
 # Add an executable called Tutorial to the project
 add_executable(Tutorial tutorial.cxx)
+set_target_properties(Tutorial PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
 # Use target_link_libraries to link the library to our executable
 # Link Tutorial to tutorial_compiler_flags

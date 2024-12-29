@@ -3,6 +3,9 @@ include(MakeTable.cmake)
 # Add a library called MathFunctions with sources MathFunctions.cxx
 add_library(MathFunctions MathFunctions.cxx)
 
+set_property(TARGET MathFunctions PROPERTY VERSION "1.0.0")
+set_property(TARGET MathFunctions PROPERTY SOVERSION "1")
+
 # State that anybody linking to MathFunctions needs to include the
 # current source directory, while MathFunctions itself doesn't.
 target_include_directories( MathFunctions
